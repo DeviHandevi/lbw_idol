@@ -54,7 +54,7 @@
 	$app_id = '1093523087427893';
 	$app_secret = '5531f9ef82beb33889e2faf467c6f23e';
 	
-	$page_id = "15253175252";
+	$page_id = "163237587161404";
 	##################################################
 	
 	#token yang digunakan untuk URL yang perlu access token
