@@ -56,24 +56,67 @@ function getTwitterFollowers() {
 	$response = $twitter->setGetfield($getfield)
 				 ->buildOauth($url, $requestMethod)
 				 ->performRequest();
-				 
-	$mil = 1000000;
-	$thou = 1000;
-	
+
 	$json_data = json_decode($response, true);
 	$followers_count = $json_data[0]['followers_count'];
-	if($followers_count >= $mil) {
-		return number_format((float)$followers_count/$mil, 2, '.', '') ."M";
-	} else if($followers_count >= $thou) {
-		return number_format((float)$followers_count/$thou, 2, '.', '') ."K";
-	} else {
-		return $followers_count;
-	}
+	return getCount($followers_count);
 }
 
 
 function getFacebookFollowers() {
-    $numberOfFollowers = "124K";
-    return $numberOfFollowers;
+	########## Value buat tes ########################
+	$app_id = '';
+	$app_secret = '';
+	
+	$page_id = "163237587161404"; #ridwankamil
+	##################################################
+	
+	#token yang digunakan untuk URL yang perlu access token
+	$authToken = execUrl("https://graph.facebook.com/oauth/access_token?grant_type=client_credentials&client_id={$app_id}&client_secret={$app_secret}");
+
+	#URL profile fan page
+	$page_url = "https://graph.facebook.com/{$page_id}";
+	
+	#Eksekusi cURL dengan URL value profile dari fanpage
+	$page_profile = execUrl($page_url . "?{$authToken}");
+	
+	#get dan sout dari value profile
+	$page_raw = json_decode($page_profile);
+	$page_raw->name . "<br>";
+	
+	#Eksekusi cURL dengan URL value like dari fanpage
+	$page_like = execUrl($page_url . "?fields=fan_count&{$authToken}");
+	
+	#get dan sout dari value like
+	$page_raw = json_decode($page_like);
+	return getCount($page_raw->fan_count);
+}
+
+#method untuk request isi URL secara GET
+function execUrl($url){	
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+	
+	$result_data = curl_exec($ch);
+	curl_close($ch);
+	
+	return $result_data;
+}
+
+function getCount($count = 0) {
+	$mil = 1000000;
+	$thou = 1000;
+	
+	if($count >= $mil) {
+		return number_format((float)$count/$mil, 2, '.', '') ."M";
+	} else if($count >= $thou) {
+		return number_format((float)$count/$thou, 2, '.', '') ."K";
+	} else {
+		return $count;
+	}
 }
 ?>
