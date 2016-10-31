@@ -77,17 +77,9 @@ function getFacebookFollowers() {
 	#URL profile fan page
 	$page_url = "https://graph.facebook.com/{$page_id}";
 	
-	#Eksekusi cURL dengan URL value profile dari fanpage
-	$page_profile = execUrl($page_url . "?{$authToken}");
-	
-	#get dan sout dari value profile
-	$page_raw = json_decode($page_profile);
-	$page_raw->name . "<br>";
-	
 	#Eksekusi cURL dengan URL value like dari fanpage
 	$page_like = execUrl($page_url . "?fields=fan_count&{$authToken}");
 	
-	#get dan sout dari value like
 	$page_raw = json_decode($page_like);
 	return getCount($page_raw->fan_count);
 }
