@@ -101,18 +101,47 @@
 		}
 	}
 	
+	#ngambil foto dari album "Profile Picture" dengan batas 5 gambar
 	$page_album = execUrl($page_url . "/albums?{$authToken}");
 	$albumarray = json_decode($page_album);
-	jsonDebug();
-	$album_id = "";
+	$profileAlbumID;
+	$count = 0;
 	foreach ( $albumarray->data as $album_data )
 	{
-		if($album_data->name == "Timeline Photos"){
-			$album_id = $album_data->id;
+		if($album_data->name == "Profile Pictures"){
+			$profileAlbumID = $album_data->id;
 			break;
 		}
-		/* echo "{$album_data->name}<br />";
-		echo "{$album_data->id}<br /><br />"; */
 	}
-	echo $album_id;
+	$page_photos = execUrl("https://graph.facebook.com/{$profileAlbumID}/photos?{$authToken}");
+	$photoarray = json_decode($page_photos);
+	$photoIDarray;
+	$count = 0;
+	foreach ( $photoarray->data as $photos_data )
+	{
+		if(($count > 0) && ($photos_data->id != $photoIDarray[$count-1])){
+			$photoIDarray[$count] = $photos_data->id;
+		}
+		else if($count == 0){
+			$photoIDarray[$count] = $photos_data->id;
+		}
+		$count = $count + 1;
+		if($count == 5){
+			break;
+		}
+	}
+	$url_array;
+	while($count > 0){
+		$count = $count;
+		$photos = execUrl("https://graph.facebook.com/{$photoIDarray[5-$count]}?fields=images&{$authToken}");
+		$photos_array = json_decode($photos);
+		foreach ($photos_array->images as $photo_images){
+			$url_array[5-$count] = $photo_images->source;
+			break;
+		}
+		$count = $count - 1;
+	}
+	for($i = 0; $i < count($url_array); $i++){
+		echo "<img src='{$url_array[$i]}'/>";
+	}
 ?>
