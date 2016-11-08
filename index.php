@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>Idol</title>
+	<?php require_once('token.php');?>
 	<link rel="stylesheet" type="text/css" href="design.css"/>
 </head>
 <body>
@@ -37,17 +38,12 @@
 </html>
 
 <?php
+
+
 function getTwitterFollowers() {
 	ini_set('display_errors', 1);
 	require_once('TwitterAPIExchange.php');
-
-	$settings = array(
-		'oauth_access_token' => "",
-		'oauth_access_token_secret' => "",
-		'consumer_key' => "",
-		'consumer_secret' => ""
-	);
-
+	global $settings;
     $url = 'https://api.twitter.com/1.1/users/lookup.json';
 	$getfield = '?screen_name=ridwankamil';
 	$requestMethod = 'GET';
@@ -65,8 +61,8 @@ function getTwitterFollowers() {
 
 function getFacebookFollowers() {
 	########## Value buat tes ########################
-	$app_id = '';
-	$app_secret = '';
+	global $app_id;
+	global $app_secret;
 	
 	$page_id = "163237587161404"; #ridwankamil
 	##################################################
