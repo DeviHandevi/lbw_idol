@@ -7,13 +7,16 @@ body {
 }
 
 div .left_pane {
-	width: 70%;
+	width: 60%;
+	display: inline-block;
 	float: left;
 }
 
 div .right_pane {
-	width: 30%;
-	float: right;
+	width: 40%;
+	display: inline-block;
+	float: left;
+	height: 100%;
 }
 
 div .twitter_timeline {
@@ -30,14 +33,14 @@ div .followers {
 
 div .followers .left_pane {
 	width: 50%;
-	float: left;
 	background-color: #3B5998; /* facebook */
+	height: 20%;
 }
 
 div .followers .right_pane {
 	width: 50%;
-	float: right;
 	background-color: #11C1FF; /* twitter */
+	height: 20%;
 }
 
 div .logo {

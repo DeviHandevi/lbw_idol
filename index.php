@@ -2,33 +2,35 @@
 <head>
 	<title>Idol</title>
 	<?php require_once('token.php');?>
+	<!--<link rel="stylesheet" type="text/css" href="bs/css/bootstrap.min.css"/>-->
 	<link rel="stylesheet" type="text/css" href="design.css"/>
-	<link rel="stylesheet" type="text/css" href="bs/css/bootstrap.min.css"/>
 </head>
 <body>
 	<div>
 		<div class="row">
-			<div class="col-md-8">asdasdasd</div>
-			<div class="col-md-4">
-			<div class="twitter_timeline">
-				<!--<h3>Latest Tweets</h3>-->
-				<a class="twitter-timeline" 
-					href="https://twitter.com/ridwankamil"
-					height="500">
-					Tweets by fabric
-				</a> 
-				<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+			<div class="left_pane">
+				asdasdasd
 			</div>
-			<div class="followers">
-				<div class="left_pane">
-					<img src="Logo/facebook.png" alt="Facebook Logo" class="logo"><br/>
-					<?php echo getFacebookFollowers(); ?>
+			<div class="right_pane">
+				<div class="twitter_timeline">
+					<!--<h3>Latest Tweets</h3>-->
+					<a class="twitter-timeline" 
+						href="https://twitter.com/ridwankamil"
+						height="80%">
+						Tweets by fabric
+					</a> 
+					<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
-				<div class="right_pane">
-					<img src="Logo/twitter.png" alt="Twitter Logo" class="logo"><br/>
-					<?php echo getTwitterFollowers(); ?>
+				<div class="followers">
+					<div class="left_pane">
+						<img src="Logo/facebook.png" alt="Facebook Logo" class="logo"><br/>
+						<?php echo getFacebookFollowers(); ?>
+					</div>
+					<div class="right_pane">
+						<img src="Logo/twitter.png" alt="Twitter Logo" class="logo"><br/>
+						<?php echo getTwitterFollowers(); ?>
+					</div>
 				</div>
-			</div>
 			</div>
 		</div>
 	</div>
