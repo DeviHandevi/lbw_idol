@@ -3,16 +3,13 @@
 	<title>Idol</title>
 	<?php require_once('token.php');?>
 	<link rel="stylesheet" type="text/css" href="design.css"/>
+	<link rel="stylesheet" type="text/css" href="bs/css/bootstrap.min.css"/>
 </head>
 <body>
 	<div>
-		<!-- FACEBOOK GALLERY -->
-		<div class="left_pane">
-			awdawdawd
-		</div>
-		
-		<!-- TWITTER TIMELINE AND FOLLOWERS -->
-		<div class="right_pane">
+		<div class="row">
+			<div class="col-md-8">asdasdasd</div>
+			<div class="col-md-4">
 			<div class="twitter_timeline">
 				<!--<h3>Latest Tweets</h3>-->
 				<a class="twitter-timeline" 
@@ -31,6 +28,7 @@
 					<img src="Logo/twitter.png" alt="Twitter Logo" class="logo"><br/>
 					<?php echo getTwitterFollowers(); ?>
 				</div>
+			</div>
 			</div>
 		</div>
 	</div>
