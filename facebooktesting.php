@@ -119,29 +119,26 @@
 	$count = 0;
 	foreach ( $photoarray->data as $photos_data )
 	{
-		if(($count > 0) && ($photos_data->id != $photoIDarray[$count-1])){
-			$photoIDarray[$count] = $photos_data->id;
-		}
-		else if($count == 0){
-			$photoIDarray[$count] = $photos_data->id;
-		}
+		$photoIDarray[$count] = $photos_data->id;
 		$count = $count + 1;
-		if($count == 5){
+		if($count == 6){
 			break;
 		}
 	}
 	$url_array;
 	while($count > 0){
 		$count = $count;
-		$photos = execUrl("https://graph.facebook.com/{$photoIDarray[5-$count]}?fields=images&{$authToken}");
+		$photos = execUrl("https://graph.facebook.com/{$photoIDarray[6-$count]}?fields=images&{$authToken}");
 		$photos_array = json_decode($photos);
 		foreach ($photos_array->images as $photo_images){
-			$url_array[5-$count] = $photo_images->source;
-			break;
+			if($photo_images->width <= 600){
+				$url_array[6-$count] = $photo_images->source;
+				break;
+			}
 		}
 		$count = $count - 1;
 	}
 	for($i = 0; $i < count($url_array); $i++){
-		echo "<img src='{$url_array[$i]}'/>";
+		echo "<img src='{$url_array[$i]}' width='300px' height='300px'/>";
 	}
 ?>
