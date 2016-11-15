@@ -9,7 +9,9 @@
 	<div>
 		<div class="row">
 			<div class="left_pane">
-				asdasdasd
+				<table style='width = 60%'>
+			<?php echo getFacebookPhotos(); ?>
+				</table>
 			</div>
 			<div class="right_pane">
 				<div class="twitter_timeline">
@@ -39,7 +41,115 @@
 
 <?php
 
+function getFacebookPhotos()
+{
+	########## Value buat tes ########################
+	global $app_id;
+	global $app_secret;
+	
+	$page_id = "163237587161404";
+	##################################################
+	
+	#token yang digunakan untuk URL yang perlu access token
+	$authToken = execUrl("https://graph.facebook.com/oauth/access_token?grant_type=client_credentials&client_id={$app_id}&client_secret={$app_secret}");
 
+	#URL profile fan page
+	$page_url = "https://graph.facebook.com/{$page_id}";
+	
+	#Eksekusi cURL dengan URL value profile dari fanpage
+	$page_profile = execUrl($page_url . "?{$authToken}");
+	
+	#get dan sout dari value profile
+	$page_raw = json_decode($page_profile);
+	echo $page_raw->name . "<br>";
+	
+	#Eksekusi cURL dengan URL value like dari fanpage
+	$page_like = execUrl($page_url . "?fields=fan_count&{$authToken}");
+	
+	#get dan sout dari value like
+	$page_raw = json_decode($page_like);
+	#echo $page_raw->fan_count;
+	
+	#Eksekusi cURL dengan URL value json dari timeline fan page
+	$page_feed = execUrl($page_url . "/feed?{$authToken}");
+
+	#Eksekusi cURL dengan URL value alamat profile picture dari fan page
+	$page_picture = execUrl($page_url . "/picture?width=140&height=110&redirect=false");
+	
+	#get dan sout dari value profile picture
+	$pict = json_decode($page_picture);
+	#echo "<img src = '{$pict->data->url}' />";
+	
+	##get dan sout dari value json timeline
+	#$feedarray = json_decode($page_feed);
+	#$count = 0;
+	#foreach ( $feedarray->data as $feed_data )
+	#{
+	#	$count = $count + 1;
+	#	echo "<h2>{$feed_data->message}</h2><br />";
+	#	echo "{$feed_data->created_time}<br /><br />";
+	#	echo "{$feed_data->id}<br /><br />";
+	#	if($count == 5){
+	#		break;
+	#	}
+	#}
+	
+	#ngambil foto dari album "Profile Picture" dengan batas 5 gambar
+	$page_album = execUrl($page_url . "/albums?{$authToken}");
+	$albumarray = json_decode($page_album);
+	$profileAlbumID;
+	$count = 0;
+	foreach ( $albumarray->data as $album_data )
+	{
+		if($album_data->name == "Profile Pictures"){
+			$profileAlbumID = $album_data->id;
+			break;
+		}
+	}
+	$page_photos = execUrl("https://graph.facebook.com/{$profileAlbumID}/photos?{$authToken}");
+	$photoarray = json_decode($page_photos);
+	$photoIDarray;
+	$count = 0;
+	foreach ( $photoarray->data as $photos_data )
+	{
+		$photoIDarray[$count] = $photos_data->id;
+		$count = $count + 1;
+		if($count == 6){
+			break;
+		}
+	}
+	$url_array;
+	while($count > 0){
+		$count = $count;
+		$photos = execUrl("https://graph.facebook.com/{$photoIDarray[6-$count]}?fields=images&{$authToken}");
+		$photos_array = json_decode($photos);
+		foreach ($photos_array->images as $photo_images){
+			if($photo_images->width <= 600){
+				$url_array[6-$count] = $photo_images->source;
+				break;
+			}
+		}
+		$count = $count - 1;
+	}
+	$i=0;
+	for($x = 0;$x < 2; $x++)
+	{
+		# '<div class="col-md-9">';
+		echo "<tr>";
+		for($y = 0; $y < 3; $y++)
+		{
+			echo "<td style='width = 33%'>";
+			echo '<div class="photos">';
+			echo "<img src='{$url_array[$i]}'/>";
+			echo "</div>";
+			$i++;
+			echo "</td>";
+		}
+		#echo "</div>";
+		echo "</tr>";
+	}
+	
+}
 function getTwitterFollowers() {
 	ini_set('display_errors', 1);
 	require_once('TwitterAPIExchange.php');
