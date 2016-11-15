@@ -10,12 +10,15 @@ div .left_pane {
 	width: 60%;
 	display: inline-block;
 	float: left;
+	overflow-y: auto;
+	height: 100%;
 }
 
 div .right_pane {
 	width: 40%;
 	display: inline-block;
 	float: left;
+	overflow-y: auto;
 	height: 100%;
 }
 
@@ -31,13 +34,18 @@ div .followers {
 	font-weight: bold;
 }
 
-div .followers .left_pane {
+div .left_pane_followers {
+	display: inline-block;
+	float: left;
 	width: 50%;
 	background-color: #3B5998; /* facebook */
 	height: 20%;
 }
 
-div .followers .right_pane {
+div .right_pane_followers {
+	display: inline-block;
+	float: left;
+	height: 100%;
 	width: 50%;
 	background-color: #11C1FF; /* twitter */
 	height: 20%;
@@ -46,4 +54,25 @@ div .followers .right_pane {
 div .logo {
 	width: 100px;
 	height: 100px;
+}
+
+table {
+	width: 100%;
+}
+
+td {
+	width: 33%;
+}
+
+img {
+	max-width: 100%;
+}
+
+h1 { 
+	color: #333; 
+	font-family: 'Open Sans Condensed', sans-serif; 
+	font-size: 35px; 
+	line-height: 10px;
+	padding: 5px; 
+	text-align: center; 
 }

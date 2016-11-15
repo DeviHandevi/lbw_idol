@@ -9,8 +9,9 @@
 	<div>
 		<div class="row">
 			<div class="left_pane">
-				<table style='width = 60%'>
-			<?php echo getFacebookPhotos(); ?>
+				<h1>Ridwan Kamil</h1>
+				<table>
+					<?php echo getFacebookPhotos(); ?>
 				</table>
 			</div>
 			<div class="right_pane">
@@ -24,11 +25,11 @@
 					<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div>
 				<div class="followers">
-					<div class="left_pane">
+					<div class="left_pane_followers">
 						<img src="Logo/facebook.png" alt="Facebook Logo" class="logo"><br/>
 						<?php echo getFacebookFollowers(); ?>
 					</div>
-					<div class="right_pane">
+					<div class="right_pane_followers">
 						<img src="Logo/twitter.png" alt="Twitter Logo" class="logo"><br/>
 						<?php echo getTwitterFollowers(); ?>
 					</div>
@@ -61,7 +62,7 @@ function getFacebookPhotos()
 	
 	#get dan sout dari value profile
 	$page_raw = json_decode($page_profile);
-	echo $page_raw->name . "<br>";
+	#echo $page_raw->name . "<br>";
 	
 	#Eksekusi cURL dengan URL value like dari fanpage
 	$page_like = execUrl($page_url . "?fields=fan_count&{$authToken}");
@@ -138,7 +139,7 @@ function getFacebookPhotos()
 		echo "<tr>";
 		for($y = 0; $y < 3; $y++)
 		{
-			echo "<td style='width = 33%'>";
+			echo "<td>";
 			echo '<div class="photos">';
 			echo "<img src='{$url_array[$i]}'/>";
 			echo "</div>";
